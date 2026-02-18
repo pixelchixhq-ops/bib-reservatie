@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bib Zitplaats Reservatie</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Reserveer je zitplaats in de bib</h1>
+    <p>Klik op de plattegrond of typ het nummer in. Je mag maar 1 plaats per dag reserveren.</p>
+
+    <!-- Plattegrond met clickable gebieden -->
+    <img src="plattegrond.png" usemap="#seatmap" alt="Plattegrond bibliotheek" id="plattegrond">
+    <map name="seatmap">
+      <!-- Voorbeeld: pas coords aan met tool zoals https://www.image-map.net/ -->
+      <area shape="rect" coords="100,100,150,150" alt="Plaats 1" href="#" onclick="selectSeat(1); return false;">
+      <area shape="rect" coords="200,100,250,150" alt="Plaats 2" href="#" onclick="selectSeat(2); return false;">
+      <area shape="rect" coords="300,100,350,150" alt="Plaats 3" href="#" onclick="selectSeat(3); return false;">
+      <!-- Voeg ALLE plaatsen toe, bijv. tot 30 of hoeveel je er hebt -->
+      <!-- Voorbeeld extra: <area shape="circle" coords="400,200,25" alt="Plaats 4" ...> -->
+    </map>
+
+    <div class="form">
+      <label for="seatInput">Plaats nummer:</label>
+      <input type="number" id="seatInput" min="1" placeholder="bijv. 5">
+
+      <label for="studentId">Je studentennummer:</label>
+      <input type="text" id="studentId" placeholder="bijv. 20231234">
+
+      <button onclick="reserveSeat()">Reserveer nu</button>
+    </div>
+
+    <div id="status" class="status"></div>
+
+    <h2>Huidige bezetting vandaag</h2>
+    <ul id="seatList"></ul>
+  </div>
+
+  <!-- Firebase SDK (versie 9 compatibel) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    // === Jouw Firebase config ===
+    // Ga naar https://console.firebase.google.com → je project → tandwiel → Project settings → jouw web app → SDK setup → config kopiëren
+    const firebaseConfig = {
+      apiKey: "JOUW_API_KEY_HIER",
+      authDomain: "JOUW_PROJECT.firebaseapp.com",
+      databaseURL: "https://JOUW_PROJECT-default-rtdb.europe-west1.firebasedatabase.app", // let op regio!
+      projectId: "JOUW_PROJECT",
+      storageBucket: "JOUW_PROJECT.appspot.com",
+      messagingSenderId: "JOUW_NUMMER",
+      appId: "JOUW_APP_ID"
+    };
+
+    // Initialiseer Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
